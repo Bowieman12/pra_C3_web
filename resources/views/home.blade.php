@@ -17,16 +17,18 @@
         <a class="border-2 border-black  hover:bg-neutral-300 " href="#">Sport</a>
     </nav>
     <div class=" my-[2rem] flex justify-center">
+
         <div class="border-2 border-black p-8 mr-[2rem]">
             <img class="mr-[1rem]" src="{{ asset('img/uitleg.jpg') }}" alt="img">
             <p class="mr-[5rem] border-t-2 border-gray-400">uitleg</p>
         </div>
-    </div>
 
-    <div class="my-[2rem] flex justify-center">
+
         <div class="border-2 border-black  p-8">
             <img class="mr-[1rem]" src="{{ asset('img/casino.jpg') }}" alt="img">
+            <p>casino</p>
         </div>
+    </div>
     </div>
 
     <div class=" my-[3rem] flex justify-center">
