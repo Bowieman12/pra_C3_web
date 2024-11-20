@@ -1,3 +1,3 @@
-<footer style="text-align: center; padding: 20px; background-color: #f8f9fa;">
-    <p>&copy; {{ date('Y') }} Voetbal. Alle rechten voorbehouden.</p>
+<footer class="text-center p-4 bg-gray-600 text-white">
+    <p class="">&copy; {{ date('Y') }} Voetbal. Alle rechten voorbehouden.</p>
 </footer>
