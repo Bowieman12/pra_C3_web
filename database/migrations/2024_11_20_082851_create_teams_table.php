@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->integer('points');
+            $table->integer('points')->default(0);
             $table->unsignedBigInteger('creator_id')->nullable();
             $table->foreign('creator_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
