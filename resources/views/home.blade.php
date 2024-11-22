@@ -20,15 +20,15 @@
     </nav>
     <div class=" my-[2rem] flex justify-center">
 
-        <div class="border-2 border-black p-8 mr-[2rem] bg-white dark:bg-gray-700 rounded-lg shadow-lg">
+        <div class="border-2 border-black p-8 mr-[2rem]">
             <img class="mr-[1rem]" src="{{ asset('img/uitleg.jpg') }}" alt="img">
-            <p class="mr-[5rem] border-t-2 border-gray-400">uitleg</p>
+            <p class="mr-[6rem] border-t-2 border-gray-400">uitleg</p>
         </div>
 
 
         <div class="border-2 border-black  p-8">
             <img class="mr-[1rem]" src="{{ asset('img/casino.jpg') }}" alt="img">
-            <p>casino</p>
+            <p class="mr-[5rem] border-t-2 border-gray-400">casino</p>
         </div>
     </div>
     </div>
@@ -37,12 +37,12 @@
 
         <div class="border-2 border-black p-8 mr-[2rem]">
             <img class="mr-[1rem]" src="{{ asset('img/sport.jpg') }}" alt="img">
-            <p class="mr-[5rem] border-t-2 border-gray-400">Sport</p>
+            <p class="mr-[6rem] border-t-2 border-gray-400">Sport</p>
         </div>
 
         <div class="border-2 border-black p-8">
             <img class="mr-[1rem]" src="{{ asset('img/scoreboard.jpg') }}" alt="img">
-            <p class="border-t-2 border-gray-400">Scoreboard</p>
+            <p class="mr-[3rem] border-t-2 border-gray-400">Scoreboard</p>
 
         </div>
     </div>
