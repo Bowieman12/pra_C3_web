@@ -63,6 +63,24 @@
         @include('components.footer')
     </footer>
 
+    <script>
+        document.getElementById('add-player').addEventListener('click', function () {
+            const container = document.getElementById('players-container');
+
+            const playerEntry = document.createElement('div');
+            playerEntry.classList.add('player-entry', 'mb-4');
+
+            playerEntry.innerHTML = `
+                <label class="block text-sm font-medium text-white">Naam speler</label>
+                <input type="text" name="player_name[]" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 bg-gray-200 text-gray-900 focus:bg-white">
+
+                <label class="block text-sm font-medium text-white">E-mail van speler</label>
+                <input type="email" name="player_email[]" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500 bg-gray-200 text-gray-900 focus:bg-white">
+            `;
+
+            container.appendChild(playerEntry);
+        });
+    </script>
 
 </body>
 

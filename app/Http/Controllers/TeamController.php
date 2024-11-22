@@ -10,25 +10,28 @@ class TeamController extends Controller
 {
     public function create()
     {
-        $players = Player::all(); // Haal alle geregistreerde spelers op
-        return view('create_team', compact('players'));
+        $players = Player::all();
+        return view('teams.create_team', compact('players'));
     }
+
     public function store(Request $request)
     {
         $request->validate([
             'team_name' => 'required|string|max:255',
-            'players' => 'required|array',
-            'players.*' => 'string|max:255',
+            'player_name.*' => 'required|string|max:255',
+            'player_email.*' => 'required|email|distinct',
         ]);
-    
+
         $team = Team::create(['name' => $request->team_name]);
-    
-        foreach ($request->players as $playerName) {
-            $team->players()->create(['name' => $playerName]);
+
+        foreach ($request->player_name as $index => $name) {
+            Player::create([
+                'name' => $name,
+                'email' => $request->player_email[$index],
+                'team_id' => $team->id,
+            ]);
         }
-    
+
         return redirect()->route('teams.index')->with('success', 'Team met spelers aangemaakt!');
     }
-    
-    
 }
