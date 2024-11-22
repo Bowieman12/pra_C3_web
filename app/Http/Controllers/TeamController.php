@@ -8,10 +8,14 @@ use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
+
     public function create()
     {
+        $team = Team::first(); // Haal het eerste team op, pas eventueel aan per gebruiker
+        $players = $team ? $team->players : [];
         $players = Player::all();
-        return view('teams.create_team', compact('players'));
+
+        return view('teams.create_team', compact('team', 'players'));
     }
 
     public function store(Request $request)
