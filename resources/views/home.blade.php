@@ -13,37 +13,38 @@
 
 <body class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
     <nav class="flex justify-center items-center bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md">
-        <a class="border-2 border-black mr-[1rem] hover:bg-blue-300 dark:hover:bg-blue-700 transition" href="{{ route('teams.create') }}">Team maken</a>
-        <a class="border-2 border-black mr-[1rem] hover:bg-blue-300 dark:hover:bg-blue-700 transition" href="#">Scoreboard</a>
-        <a class="border-2 border-black mr-[1rem] hover:bg-blue-300 dark:hover:bg-blue-700 transition" href="#">Casino</a>
-        <a class="border-2 border-black hover:bg-blue-300 dark:hover:bg-blue-700 transition" href="#">Sport</a>
+
     </nav>
     <div class=" my-[2rem] flex justify-center">
 
-        <div class="border-2 border-black p-8 mr-[2rem] bg-white dark:bg-gray-700 rounded-lg shadow-lg">
-            <img class="mr-[1rem]" src="{{ asset('img/uitleg.jpg') }}" alt="img">
-            <p class="mr-[5rem] border-t-2 border-gray-400">uitleg</p>
+        <div class=" p-8 mr-[2rem]">
+            <img class="border-2 border-gray-700 mr-[1rem]" src="{{ asset('img/uitleg.jpg') }}" alt="img">
+            <h1 class="mr-[6rem] border-t-2 border-gray-400">Uitleg</h1>
+            <p class="border-2 border-black">Lorem ipsum disicing elit. Recusandae maiores minus minima delectus illum! Sint quidem repellendus exercitationem repellat aspernatur obcaecati iste ut at harum odio fugiat, doloremque non voluptate.</p>
+
         </div>
 
 
-        <div class="border-2 border-black  p-8">
-            <img class="mr-[1rem]" src="{{ asset('img/casino.jpg') }}" alt="img">
-            <p>casino</p>
+        <div class="p-8">
+            <img class="border-2 border-gray-700 mr-[1rem]" src="{{ asset('img/casino.jpg') }}" alt="img">
+            <h1 class="mr-[5rem] border-t-2 border-gray-400">casino</h1>
+            <p class="border-2 border-black">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, molestias, provident voluptatibus eaque quasi ipsa architecto consequatur commodi aspernatur nemo, exercitationem animi velit fugit tenetur voluptatem aliquid ipsum corrupti vitae!</p>
         </div>
     </div>
     </div>
 
     <div class=" my-[3rem] flex justify-center">
 
-        <div class="border-2 border-black p-8 mr-[2rem]">
-            <img class="mr-[1rem]" src="{{ asset('img/sport.jpg') }}" alt="img">
-            <p class="mr-[5rem] border-t-2 border-gray-400">Sport</p>
+        <div class=" p-8 mr-[2rem]">
+            <img class="border-2 border-gray-700 mr-[1rem]" src="{{ asset('img/sport.jpg') }}" alt="img">
+            <p class="mr-[6rem] border-t-2 border-gray-400">Sport</p>
+            <p class="border-2 border-black">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus, impedit corrupti architecto accusamus ad ut qui dicta nemo dolor. A commodi repellendus fugiat harum officiis, dolore quis quasi explicabo veniam.</p>
         </div>
 
-        <div class="border-2 border-black p-8">
-            <img class="mr-[1rem]" src="{{ asset('img/scoreboard.jpg') }}" alt="img">
-            <p class="border-t-2 border-gray-400">Scoreboard</p>
-
+        <div class=" p-8">
+            <img class="border-2 border-gray-700 mr-[1rem]" src="{{ asset('img/scoreboard.jpg') }}" alt="img">
+            <p class="mr-[3rem] border-t-2 border-gray-400">Scoreboard</p>
+            <p class="border-2 border-black">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate ipsam temporibus, consectetur error maxime perferendis et! Error, iure voluptatem, assumenda, unde aliquam esse iste dicta facere qui aspernatur aperiam sint?</p>
         </div>
     </div>
     <x-footer />
