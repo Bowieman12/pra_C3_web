@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tournaments', function (Blueprint $table) {
+        Schema::create('tournament_teams', function (Blueprint $table) {
             $table->id(); // Primary Key
-            $table->string('title'); // Tournament title
-            $table->unsignedInteger('max_teams'); // Max number of teams
-            $table->timestamp('started')->nullable(); // Nullable start timestamp
+            $table->foreignId('tournament_id')->constrained('tournaments')->cascadeOnDelete(); // FK to tournaments
+            $table->foreignId('team_id')->constrained('teams')->cascadeOnDelete(); // FK to teams
             $table->timestamps(); // created_at and updated_at
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('tournaments');
+        Schema::dropIfExists('tournament_teams');
     }
 };

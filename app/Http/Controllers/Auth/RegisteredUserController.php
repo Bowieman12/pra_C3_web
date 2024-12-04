@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Team; // Import Team model
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -36,16 +37,28 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // Gebruiker aanmaken
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        // Team aanmaken
+        $team = Team::create([
+            'name' => ($user->name ?: 'Default Team Name') . "'s Team", // Zorg voor een standaardnaam als $user->name leeg is
+            'players' => json_encode([]), // Voeg een leeg JSON-veld toe voor spelers
+        ]);
 
+        // Koppel het team aan de gebruiker
+        $user->team_id = $team->id;
+        $user->save();
+
+        // Event afvuren en gebruiker inloggen
+        event(new Registered($user));
         Auth::login($user);
 
+        // Redirect naar home
         return redirect(RouteServiceProvider::HOME);
     }
 }
