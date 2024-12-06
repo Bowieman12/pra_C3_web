@@ -4,6 +4,7 @@
     </div>
     <nav style="flex: 2;">
         <ul style="display: flex; justify-content: space-around; list-style: none; padding: 0; margin: 0;">
+<<<<<<< Updated upstream
             <li>
                 @if(auth()->user() && auth()->user()->team)
                     <a style="text-decoration: none;" href="{{ route('teams.edit', ['id' => auth()->user()->team->id]) }}">Team bewerken</a>
@@ -12,6 +13,10 @@
                 @endif
             </li>
             <li><a href="{{ route('scoreboard.index')}}" style="text-decoration: none;">Scoreboard</a></li>
+=======
+            <li><a style="text-decoration: none;" href="{{ route('teams.create') }}">Team maken</a></li>
+            <li><a href="{{ route('register')}}" style="text-decoration: none;">Scoreboard</a></li>
+>>>>>>> Stashed changes
             <li><a href="/" style="text-decoration: none; ">Sport</a></li>
 
             @guest

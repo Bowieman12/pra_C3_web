@@ -26,8 +26,21 @@ Route::get('/dashboard', function () {
     return view('home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware(['role:admin'])->group(function () {
+    Route::get('/admin', function () {
+        return 'Welkom Admin';
+    });
+
+    Route::get('/referee', function(){
+        return 'Welkom Referee';
+    });
+
+    Route::get('/user', function(){
+        return 'Welkom gebruiker';
+    });
+});
+
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'create'])->name('profile.create');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
