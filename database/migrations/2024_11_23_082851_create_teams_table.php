@@ -9,20 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('teams', function (Blueprint $table) {
-            $table->id();
-            $table->text('name');
-            $table->json('players');
-            $table->timestamps();
+            $table->id(); // Primary Key
+            $table->string('name'); // Team name
+            $table->json('players')->nullable(); // JSON field for players
+            $table->timestamps(); // created_at and updated_at
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('teams');
     }

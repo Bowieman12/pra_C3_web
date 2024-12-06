@@ -20,10 +20,10 @@ use App\Http\Controllers\TeamController;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -32,10 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.create');
-Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
-Route::post('/teams/{team}/add-players', [TeamController::class, 'addPlayers'])->name('teams.addPlayers');
-
-Route::get('/scoreboard', [ScoreboardController::class, 'show'])->name('scoreboard.show');
-
+Route::get('teams/create', [TeamController::class, 'create'])->name('teams.create');
+Route::post('teams', [TeamController::class, 'store'])->name('teams.store');
+Route::get('teams/{id}/edit', [TeamController::class, 'edit'])->name('teams.edit');
+Route::put('teams/{id}', [TeamController::class, 'update'])->name('teams.update');
+Route::delete('teams/{id}', [TeamController::class, 'destroy'])->name('teams.destroy');
 require __DIR__.'/auth.php';
