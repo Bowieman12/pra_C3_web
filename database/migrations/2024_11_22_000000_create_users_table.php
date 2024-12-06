@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->unsignedBigInteger('team_id');
-            $table->enum('role', ['user', 'referee', 'admin']);
+            $table->enum('role', ['user', 'admin', 'referee']);
             $table->timestamps();
 
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');

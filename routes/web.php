@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ScoreboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TeamController;
+
 
 
 /*
@@ -33,5 +35,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.create');
 Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
 Route::post('/teams/{team}/add-players', [TeamController::class, 'addPlayers'])->name('teams.addPlayers');
+
+Route::get('/scoreboard', [ScoreboardController::class, 'show'])->name('scoreboard.show');
 
 require __DIR__.'/auth.php';

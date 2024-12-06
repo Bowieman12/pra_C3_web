@@ -5,7 +5,7 @@
     <nav style="flex: 2;">
         <ul style="display: flex; justify-content: space-around; list-style: none; padding: 0; margin: 0;">
             <li><a style="text-decoration: none;" href="{{ route('teams.create') }}">Team maken</a></li>
-            <li><a href="/" style="text-decoration: none;">Scoreboard</a></li>
+            <li><a href="{{ route('scoreboard.index')}}" style="text-decoration: none;">Scoreboard</a></li>
             <li><a href="/" style="text-decoration: none; ">Sport</a></li>
 
             @guest
