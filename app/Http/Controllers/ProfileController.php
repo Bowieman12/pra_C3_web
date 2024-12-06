@@ -11,10 +11,25 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function run(){
+        //rollen maken
+        Role::create(['name => user']);
+        Role::create(['name => referee']);
+        Role::create(['name => admin']);
+
+        //tijdelijke admin account om te testen of het werkt
+        $admin = User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password'),
+        ]);
+        $admin->assignRole('admin');
+    }
     public function edit(Request $request): View
     {
         return view('profile.edit', [
             'user' => $request->user(),
+
         ]);
     }public function update(ProfileUpdateRequest $request): RedirectResponse
     {
