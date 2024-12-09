@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::get('scoreboard', [ScoreboardController::class, 'index'])->name('scoreboard.index');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/teams/edit', [TeamController::class, 'edit'])->name('teams.edit');
     Route::put('/teams/update', [TeamController::class, 'update'])->name('teams.update');

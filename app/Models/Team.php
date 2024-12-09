@@ -12,10 +12,12 @@ class Team extends Model
     protected $fillable = [
         'name',
         'players',
+        
     ];
 
     public function user()
     {
         return $this->hasOne(User::class);
+
     }
 }

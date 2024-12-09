@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('scoreboard', function (Blueprint $table) {
+        Schema::create('scoreboards', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('score');
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('scoreboard');
+        Schema::dropIfExists('scoreboards');
     }
 };

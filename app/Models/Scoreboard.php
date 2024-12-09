@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Scoreboard extends Model
 {
     use HasFactory;
+    protected $fillable = ['team', 'score'];
+   
 }
