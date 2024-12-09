@@ -8,6 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+    <x-header/>
     <div class="container mx-auto flex flex-col items-center justify-center min-h-screen">
         <h1 class="text-2xl font-bold mb-4">Bewerk je Team</h1>
 
@@ -68,7 +69,7 @@
             </button>
         </form>
     </div>
-
+    <x-footer/>
     <!-- JavaScript voor dynamisch toevoegen/verwijderen van spelers -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
