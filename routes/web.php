@@ -46,9 +46,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::get('scoreboard', [ScoreboardController::class, 'index'])->name('scoreboard.index');
-Route::get('teams/create', [TeamController::class, 'create'])->name('teams.create');
-Route::post('teams', [TeamController::class, 'store'])->name('teams.store');
-Route::get('teams/{id}/edit', [TeamController::class, 'edit'])->name('teams.edit');
-Route::put('teams/{id}', [TeamController::class, 'update'])->name('teams.update');
-Route::delete('teams/{id}', [TeamController::class, 'destroy'])->name('teams.destroy');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/teams/edit', [TeamController::class, 'edit'])->name('teams.edit');
+    Route::put('/teams/update', [TeamController::class, 'update'])->name('teams.update');
+});
+
 require __DIR__.'/auth.php';

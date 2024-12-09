@@ -7,55 +7,46 @@ use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
-    public function create() {
-        return view('teams.create_team');
-    }
+    // Laat het formulier zien voor het bewerken van het team van de ingelogde gebruiker
+    public function edit()
+    {
+        $team = auth()->user()->team;
 
-    public function store(Request $request) {
-        $request->validate([
-            'naam' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        $team = new Team();
-        $team->naam = $request->naam;
-
-        if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('team_logos', 'public');
-            $team->foto = $path;
+        // Zorg ervoor dat de gebruiker een team heeft
+        if (!$team) {
+            abort(404, 'Team niet gevonden.');
         }
-        $team->save();
 
-        return redirect()->route('teams.create')->with('success', 'Team toegevoegd!');
-    }
-
-    public function edit($id) {
-        $team = Team::findOrFail($id);
         return view('teams.edit', compact('team'));
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request)
+    {
+        // Valideer de invoer
         $request->validate([
-            'naam' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'required|string|max:255',
+            'players' => 'nullable|array', // Valideer dat "players" een array is
+            'players.*' => 'string|max:255', // Valideer dat elke speler een string is
         ]);
-
-        $team = Team::findOrFail($id);
-        $team->naam = $request->naam;
-
-        if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('team_logos', 'public');
-            $team->foto = $path;
+    
+        // Haal het team van de ingelogde gebruiker op
+        $team = auth()->user()->team;
+    
+        if (!$team) {
+            return redirect()->route('teams.edit')->withErrors(['error' => 'Geen team gevonden!']);
         }
+    
+        // Update de teamnaam
+        $team->name = $request->name;
+    
+        // Update de spelerslijst (als het aanwezig is in de request)
+        if ($request->has('players')) {
+            $team->players = json_encode($request->players); // Opslaan als JSON
+        }
+    
         $team->save();
-
-        return redirect()->route('teams.create')->with('success', 'Team bijgewerkt!');
+    
+        return redirect()->route('teams.edit')->with('success', 'Team succesvol bijgewerkt!');
     }
-
-    public function destroy($id) {
-        $team = Team::findOrFail($id);
-        $team->delete();
-
-        return redirect()->route('teams.create')->with('success', 'Team verwijderd!');
-    }
+    
 }

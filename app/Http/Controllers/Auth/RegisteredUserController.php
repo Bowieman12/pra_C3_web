@@ -33,32 +33,30 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
+    
         // Gebruiker aanmaken
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
+    
         // Team aanmaken
         $team = Team::create([
-            'name' => ($user->name ?: 'Default Team Name') . "'s Team", // Zorg voor een standaardnaam als $user->name leeg is
-            'players' => json_encode([]), // Voeg een leeg JSON-veld toe voor spelers
+            'name' => $user->name . "'s Team", // Standaard teamnaam gebaseerd op gebruiker
+            'players' => json_encode([]), // Lege spelerslijst
         ]);
-
-        // Koppel het team aan de gebruiker
+    
+        // Team koppelen aan de gebruiker
         $user->team_id = $team->id;
         $user->save();
-
-        // Event afvuren en gebruiker inloggen
-        event(new Registered($user));
+    
+        // Gebruiker inloggen
         Auth::login($user);
-
-        // Redirect naar home
-        return redirect(RouteServiceProvider::HOME);
+    
+        return redirect()->route('home')->with('success', 'Registratie succesvol en team aangemaakt!');
     }
 }

@@ -14,8 +14,8 @@ class Team extends Model
         'players',
     ];
 
-    public function players()
+    public function user()
     {
-        return $this->hasMany(Player::class);
+        return $this->hasOne(User::class);
     }
 }
