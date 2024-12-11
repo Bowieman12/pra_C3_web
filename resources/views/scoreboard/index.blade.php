@@ -17,9 +17,9 @@
         <tb>
             @foreach ($scores as $score)
             <tr>
-                <td class="border px-4 py-2">{{ $team->id }}</td>
-                <td class="border px-4 py-2">{{ $team->name }}</td>
-                <td class="border px-4 py-2">{{ $team->score }}</td>
+                <td class="border px-4 py-2">{{ $score->id }}</td>
+                <td class="border px-4 py-2">{{ $score->name }}</td>
+                <td class="border px-4 py-2">{{ $score->score }}</td>
             </tr>
         </tb>
         @endforeach
