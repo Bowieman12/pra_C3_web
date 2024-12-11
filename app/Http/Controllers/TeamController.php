@@ -28,25 +28,25 @@ class TeamController extends Controller
             'players' => 'nullable|array', // Valideer dat "players" een array is
             'players.*' => 'string|max:255', // Valideer dat elke speler een string is
         ]);
-    
+
         // Haal het team van de ingelogde gebruiker op
         $team = auth()->user()->team;
-    
+
         if (!$team) {
             return redirect()->route('teams.edit')->withErrors(['error' => 'Geen team gevonden!']);
         }
-    
+
         // Update de teamnaam
         $team->name = $request->name;
-    
+
         // Update de spelerslijst (als het aanwezig is in de request)
         if ($request->has('players')) {
             $team->players = json_encode($request->players); // Opslaan als JSON
         }
-    
+
         $team->save();
-    
+
         return redirect()->route('teams.edit')->with('success', 'Team succesvol bijgewerkt!');
     }
-    
+
 }
