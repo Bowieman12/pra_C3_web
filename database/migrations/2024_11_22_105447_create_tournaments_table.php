@@ -12,11 +12,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tournaments', function (Blueprint $table) {
-            $table->id(); // Primary Key
-            $table->string('title'); // Tournament title
-            $table->unsignedInteger('max_teams'); // Max number of teams
-            $table->timestamp('started')->nullable(); // Nullable start timestamp
-            $table->timestamps(); // created_at and updated_at
+            $table->id(); 
+            $table->string('title'); 
+            $table->unsignedInteger('max_teams');
+            $table->timestamp('started')->nullable(); 
+            $table->timestamps(); 
         });
     }
 

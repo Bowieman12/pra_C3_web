@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScoreboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\GameController;
 
 
 
@@ -51,5 +53,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/teams/edit', [TeamController::class, 'edit'])->name('teams.edit');
     Route::put('/teams/update', [TeamController::class, 'update'])->name('teams.update');
 });
+
+Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournaments.index');
+Route::get('/tournaments/{tournament}/bracket', [TournamentController::class, 'showBracket'])->name('tournaments.bracket');
+
+Route::put('/games/{game}', [GameController::class, 'update'])->name('games.update');
 
 require __DIR__.'/auth.php';

@@ -12,10 +12,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tournament_teams', function (Blueprint $table) {
-            $table->id(); // Primary Key
-            $table->foreignId('tournament_id')->constrained('tournaments')->cascadeOnDelete(); // FK to tournaments
-            $table->foreignId('team_id')->constrained('teams')->cascadeOnDelete(); // FK to teams
-            $table->timestamps(); // created_at and updated_at
+            $table->id(); 
+            $table->foreignId('tournament_id')->constrained('tournaments')->cascadeOnDelete(); 
+            $table->foreignId('team_id')->constrained('teams')->cascadeOnDelete(); 
+            $table->timestamps();
         });
     }
 
