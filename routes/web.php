@@ -4,8 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScoreboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TeamController;
-
-
+use App\Http\Controllers\TournamentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +45,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::get('scoreboard', [ScoreboardController::class, 'index'])->name('scoreboard.index');
+
+Route::get('/tournament', [TournamentController::class, 'show'])->name('tournaments.index');
+Route::get('/tournament/create', [TournamentController::class, 'create'])->name('tournaments.create');
+Route::get('/tournament/{match}/score', [TournamentController::class, 'update'])->name('tournaments.update');
+
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/teams/edit', [TeamController::class, 'edit'])->name('teams.edit');

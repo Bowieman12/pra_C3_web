@@ -13,7 +13,7 @@
             </li>
             <li><a href="{{ route('scoreboard.index')}}" style="text-decoration: none;">Scoreboard</a></li>
             <li><a href="{{ route('register')}}" style="text-decoration: none;">casino</a></li>
-            <li><a href="/" style="text-decoration: none; ">Sport</a></li>
+            <li><a href="{{route('tournaments.index')}}" style="text-decoration: none; ">Toernooien</a></li>
 
             @guest
                 <li><a href="{{ auth()->check() ? route('advertenties.create') : route('login') }}"
@@ -25,6 +25,7 @@
                 <li>
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                         @csrf
+                        
                         <button type="submit" style="background: none; border: none;  cursor: pointer;">Logout</button>
                     </form>
                 </li>

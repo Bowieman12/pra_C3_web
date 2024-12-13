@@ -14,13 +14,11 @@ class ScoreboardTablesSeeder extends Seeder
     public function run(): void
     {
         DB::table('scoreboards')->insert( [
-            ['name' => 'FC Barcelona vs Real Madrid',  'score' => 2-2],
-            ['name' => 'Ajax', 'score' => 2-1],
-            ['name' => 'Manchester United v Barcelona', 'score:' => 2-0],
-            ['name' => 'Arsenal v Tottenham', 'score:' => 1-5],
-            ['name' => 'Chelsea v Manchester City', 'score:' => 2-5],
-            ['name' => 'Everton v Leicster city', 'score:' => 3-0],
-            ['name' => 'Juventus v Paris Saint-Germain', 'score:' => 3-2],
+            ['name' => 'FC Barcelona',  'punten' => 15],
+            ['name' => 'Real Madrid',  'punten' => 10],
+            ['name' => 'Ajax',  'punten' => 8],
+            ['name' => 'ASC Monaco',  'punten' => 2],
+
         ]);
 
     }
