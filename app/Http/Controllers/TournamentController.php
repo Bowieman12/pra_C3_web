@@ -8,29 +8,26 @@ use App\Models\Game;
 
 class TournamentController extends Controller
 {
-    public function create()
+    public function create (Request $request)
     {
-        //16 teams aanmaken
-        $teams = collect();
-        for ($i = 1; $i <= 16; $i++) {
-            $teams->push(Team::create(['name' => 'Team ' . $i]));
-        }
-        //opslitsen in twee groepen
-        $leftSide = $teams->slice(0, 8);
-        $rightSide = $teams->slice(8);
+        $teams = Team::all(); // Haal alle teams op uit de database
 
-        //wedstrijden maken
-        $games = [];
-        for ($i = 0; $i < 8; $i++) {
-            $games[] = Game::create([
-                'tournament_id' => 1, // Verander dit als je een toernooi-model gebruikt
-                'team1_id' => $leftSide[$i]->id,
-                'team2_id' => $rightSide[$i]->id,
-                'team1_score' => null,
-                'team2_score' => null,
-            ]);
-            return view('tournament.index', compact('games'));
+        if ($teams->count() < 2) {
+            return response()->json(['error' => 'Er moeten minimaal 2 teams zijn om een schema te genereren.'], 400);
         }
+
+        $schedule = [];
+
+        for ($i = 0; $i < $teams->count(); $i++) {
+            for ($j = $i + 1; $j < $teams->count(); $j++) {
+                $schedule[] = [
+                    'team1' => $teams[$i]->name,
+                    'team2' => $teams[$j]->name,
+                ];
+            }
+        }
+
+        return response()->json($schedule);
     }
 
     public function update(Request $request, Game $game){
@@ -43,6 +40,6 @@ class TournamentController extends Controller
     }
     public function show(){
         $games = Game::with(['team1', 'team2'])->get();
-        return view('tournament.show', compact('games'));
+        return view('tournaments.index', compact('games'));
         }
 }

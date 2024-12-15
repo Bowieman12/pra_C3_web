@@ -22,6 +22,7 @@ class ProfileController extends Controller
             'name' => 'Admin User',
             'email' => 'admin@example.com',
             'password' => bcrypt('password'),
+            
         ]);
         $admin->assignRole('admin');
     }

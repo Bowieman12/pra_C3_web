@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScoreboardController;
 use Illuminate\Support\Facades\Route;
@@ -25,30 +26,25 @@ Route::get('/dashboard', function () {
     return view('home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['role:admin'])->group(function () {
-    Route::get('/admin', function () {
-        return 'Welkom Admin';
-    });
 
-    Route::get('/referee', function(){
-        return 'Welkom Referee';
-    });
-
-    Route::get('/user', function(){
-        return 'Welkom gebruiker';
-    });
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/adminpanel', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/tournament/create', [TournamentController::class, 'create'])->name('tournaments.create');
+    Route::get('/tournament/{match}/score', [TournamentController::class, 'update'])->name('tournaments.update');
+
+});
+
 Route::get('scoreboard', [ScoreboardController::class, 'index'])->name('scoreboard.index');
 
 Route::get('/tournament', [TournamentController::class, 'show'])->name('tournaments.index');
-Route::get('/tournament/create', [TournamentController::class, 'create'])->name('tournaments.create');
-Route::get('/tournament/{match}/score', [TournamentController::class, 'update'])->name('tournaments.update');
 
 
 
