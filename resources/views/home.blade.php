@@ -37,7 +37,7 @@
 
         <div class=" p-8 mr-[2rem]">
             <img class="border-2 border-gray-700 mr-[1rem]" src="{{ asset('img/sport.jpg') }}" alt="img">
-            <p class="mr-[6rem] border-t-2 border-gray-400">Sport</p>
+            <p class="mr-[6rem] border-t-2 border-gray-400">Toernooi</p>
             <p class="border-2 border-black">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus, impedit corrupti architecto accusamus ad ut qui dicta nemo dolor. A commodi repellendus fugiat harum officiis, dolore quis quasi explicabo veniam.</p>
         </div>
 

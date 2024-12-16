@@ -12,10 +12,10 @@
         <x-header />
     </header>
     <main>
-       <h1>Admin panel</h1>
-       
+       <h1 class="flex justify-center">Admin panel</h1>
+
     </main>
-    <footer>
+    <footer  class="mt-[38rem]">
         <x-footer />
     </footer>
 </body>
