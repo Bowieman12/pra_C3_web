@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class TournamentController extends Controller
 {
     // Functie om het bracket te genereren
-    public function generateBracket($tournamentId)
+    public function showBracket($tournamentId)
     {
         $tournament = Tournament::findOrFail($tournamentId);
         $teams = $tournament->teams;
@@ -29,8 +29,8 @@ class TournamentController extends Controller
             ]);
         }
 
-        return redirect()->route('tournaments.show', $tournamentId)
-                         ->with('success', 'Bracket succesvol gegenereerd!');
+        return redirect()->route('tournament.bracket', $tournamentId)
+            ->with('success', 'Bracket succesvol gegenereerd!');
     }
 
     // Functie om toernooien te tonen
@@ -42,4 +42,55 @@ class TournamentController extends Controller
         // Geef de toernooien door naar de view
         return view('tournaments.index', compact('tournaments'));
     }
+
+    public function edit(Tournament $tournament)
+    {
+        return view('tournament.edit', ['tournament' => $tournament]);
+    }
+
+    public function update(Request $request, Tournament $tournament)
+    {
+        $request->validate([
+            'title' => ['required', 'string'],
+            'max_teams' => ['required', 'numeric'],
+        ]);
+
+        $tournament->update([
+            'title' => $request->title,
+            'max_teams' => $request->max_teams,
+        ]);
+        return redirect()->route('tournament.index');
+    }
+
+    public function create()
+    {
+        return view('tournaments.create');
+    }
+
+    public function store(Request $request)
+{
+    // Validate the request input
+    $request->validate([
+        'title' => 'required|string|max:255', // Validation rule for title
+        'max_teams' => 'required|integer|min:1', // Validation rule for max_teams
+    ]);
+
+    // Create and save the tournament
+    $tournaments = Tournament::create([
+        'title' => $request->title,
+        'max_teams' => $request->max_teams,
+    ]);
+
+    return redirect()->route('tournament.index');
+}
+
+
+    public function delete(Tournament $tournament)
+    {
+        $tournament= Tournament::findOrFail($tournament);
+        $tournament->delete();
+        return redirect()->route('tournament.index');
+    }
+
+
 }

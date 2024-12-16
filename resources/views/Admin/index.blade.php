@@ -13,7 +13,7 @@
     </header>
     <main>
        <h1 class="flex justify-center">Admin panel</h1>
-
+<a href="{{route('tournament.create')}}">Create</a>
     </main>
     <footer  class="mt-[38rem]">
         <x-footer />

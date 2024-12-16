@@ -16,4 +16,10 @@ class Tournament extends Model
     {
         return $this->hasMany(Game::class);
     }
+    protected $fillable = [
+        'title',
+        'max_teams',
+
+    ];
+
 }

@@ -31,7 +31,7 @@
             <ul class="mt-4 w-full space-y-4">
                 @foreach($tournaments as $tournament)
                     <li class="bg-white rounded-lg shadow-md p-4 flex justify-between items-center">
-                        <a href="{{ route('tournaments.bracket', $tournament->id) }}" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <a href="{{ route('tournament.bracket', $tournament->id) }}" class="text-blue-600 hover:text-blue-800 font-medium">
                             {{ $tournament->title }}
                         </a>
                         <span class="text-sm text-gray-500">

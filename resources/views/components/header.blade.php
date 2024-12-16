@@ -13,7 +13,7 @@
                 @endif
             </li>
             <li><a href="{{ route('scoreboard.index')}}" style="text-decoration: none;">Scoreboard</a></li>
-            <a href="{{ route('tournaments.index') }}" style="text-decoration: none;">
+            <a href="{{ route('tournament.index') }}" style="text-decoration: none;">
                 Bekijk Alle Toernooien
             </a>
                 @guest

@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\GameController;
-
-
+use Database\Seeders\TournamentSeeder;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,14 +39,18 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/adminpanel', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/tournament/create', [TournamentController::class, 'create'])->name('tournaments.create');
-    Route::get('/tournament/{match}/score', [TournamentController::class, 'update'])->name('tournaments.update');
-
+    Route::get('/tournament/create', [TournamentController::class, 'create'])->name('tournament.create');
+    Route::put('/tournament/{match}/score', [TournamentController::class, 'update'])->name('tournament.update');
+    Route::post('/tournament/create', [TournamentController::class, 'store'])->name('tournament.store');
+    Route::get('/tournament/{id}/edit', [TournamentController::class, 'edit'])->name('tournament.edit');
+    Route::delete('tournament/{id}', [TournamentController::class, 'delete'])->name('tournament.destroy');
 });
 
 Route::get('scoreboard', [ScoreboardController::class, 'index'])->name('scoreboard.index');
 
-Route::get('/tournament', [TournamentController::class, 'show'])->name('tournaments.index');
+Route::get('/tournament', [TournamentController::class, 'index'])->name('tournament.index');
+Route::get('/tournament/store/', [TournamentController::class, 'store'])->name('tournament.store');
+Route::get('/tournaments/{tournament}/bracket', [TournamentController::class, 'showBracket'])->name('tournament.bracket');
 
 
 
@@ -56,9 +59,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/teams/edit', [TeamController::class, 'edit'])->name('teams.edit');
     Route::put('/teams/update', [TeamController::class, 'update'])->name('teams.update');
 });
-
-Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournaments.index');
-Route::get('/tournaments/{tournament}/bracket', [TournamentController::class, 'showBracket'])->name('tournaments.bracket');
 
 Route::put('/games/{game}', [GameController::class, 'update'])->name('games.update');
 
