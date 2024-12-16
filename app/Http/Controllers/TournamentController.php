@@ -29,7 +29,7 @@ class TournamentController extends Controller
             ]);
         }
 
-        return redirect()->route('tournament.bracket', $tournamentId)
+        return redirect()->route('tournament.index')
             ->with('success', 'Bracket succesvol gegenereerd!');
     }
 
