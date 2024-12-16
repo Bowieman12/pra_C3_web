@@ -12,8 +12,6 @@
                 @endif
             </li>
             <li><a href="{{ route('scoreboard.index')}}" style="text-decoration: none;">Scoreboard</a></li>
-            <li><a href="{{ route('register')}}" style="text-decoration: none;">casino</a></li>
-            <li><a href="/" style="text-decoration: none; ">Sport</a></li>
             <a href="{{ route('tournaments.index') }}" style="text-decoration: none;">
                 Bekijk Alle Toernooien
             </a>
