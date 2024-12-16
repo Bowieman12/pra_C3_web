@@ -38,7 +38,7 @@ class TournamentController extends Controller
     {
         // Haal alle toernooien op
         $tournaments = Tournament::all();
-        
+
         // Geef de toernooien door naar de view
         return view('tournaments.index', compact('tournaments'));
     }
