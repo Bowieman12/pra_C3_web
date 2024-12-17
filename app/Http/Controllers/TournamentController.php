@@ -8,16 +8,17 @@ use Illuminate\Http\Request;
 class TournamentController extends Controller
 {
     // Functie om het bracket te genereren
-    public function showBracket($tournamentId)
+    public function showBracket($tournament)
     {
-        $tournament = Tournament::findOrFail($tournamentId);
+        $scores = Tournament::all();
+        $tournament = Tournament::findOrFail($tournament);
         $teams = $tournament->teams;
 
         if ($teams->count() % 2 !== 0) {
             return back()->with('error', 'Het aantal teams moet even zijn voor een bracket.');
         }
 
-        $round = 1; // Begin met de eerste ronde
+        $round = 1;
         $matches = $teams->chunk(2);
 
         foreach ($matches as $pair) {
@@ -29,9 +30,10 @@ class TournamentController extends Controller
             ]);
         }
 
-        return redirect()->route('tournament.index')
-            ->with('success', 'Bracket succesvol gegenereerd!');
+        return view('tournaments.bracket', compact('tournament', 'teams',  'scores' ));
     }
+
+
 
     // Functie om toernooien te tonen
     public function index()

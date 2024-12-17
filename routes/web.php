@@ -50,7 +50,9 @@ Route::get('scoreboard', [ScoreboardController::class, 'index'])->name('scoreboa
 
 Route::get('/tournament', [TournamentController::class, 'index'])->name('tournament.index');
 Route::get('/tournament/store/', [TournamentController::class, 'store'])->name('tournament.store');
-Route::get('/tournaments/{tournament}/bracket', [TournamentController::class, 'showBracket'])->name('tournament.bracket');
+Route::get('/tournament/{tournament}', [TournamentController::class, 'showBracket'])->name('tournament.bracket');
+
+
 
 
 
