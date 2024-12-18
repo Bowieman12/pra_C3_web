@@ -12,7 +12,7 @@
                     <span style="color: gray;">Geen team beschikbaar</span>
                 @endif
             </li>
-            <li><a href="{{ route('scoreboard.index')}}" style="text-decoration: none;">Scoreboard</a></li>
+            <li><a href="{{ route('teams.index')}}" style="text-decoration: none;">Bekijk alle teams</a></li>
             <a href="{{ route('tournament.index') }}" style="text-decoration: none;">
                 Bekijk Alle Toernooien
             </a>

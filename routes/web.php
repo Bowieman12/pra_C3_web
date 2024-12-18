@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ScoreboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TournamentController;
@@ -42,15 +41,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tournament/create', [TournamentController::class, 'create'])->name('tournament.create');
     Route::put('/tournament/{id}', [TournamentController::class, 'update'])->name('tournament.update');
     Route::post('/tournament/create', [TournamentController::class, 'store'])->name('tournament.store');
-    Route::put('/tournament/{match}/score', [TournamentController::class, 'update'])->name('tournament.update');
-    Route::post('/tournament/create', [TournamentController::class, 'store'])->name('tournament.create');
-    Route::get('/tournament/{id}/edit', [TournamentController::class, 'edit'])->name('tournament.edit');
+    Route::put('/tournament/{match}/score', [TournamentController::class, 'update'])->name('tournament.update');    Route::get('/tournament/{id}/edit', [TournamentController::class, 'edit'])->name('tournament.edit');
     Route::delete('tournament/{id}', [TournamentController::class, 'delete'])->name('tournament.destroy');
     Route::get('/adminpanel', [AdminController::class, 'admin'])->name('admin.index');
 });
 Route::post('/tournaments/{tournament}/teams', [TournamentController::class, 'addTeam'])->name('tournaments.bracket');
 
-Route::get('scoreboard', [ScoreboardController::class, 'index'])->name('scoreboard.index');
+Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
 
 Route::get('/tournament', [TournamentController::class, 'index'])->name('tournament.index');
 Route::get('/tournament/{tournament}', [TournamentController::class, 'showBracket'])->name('tournament.bracket');

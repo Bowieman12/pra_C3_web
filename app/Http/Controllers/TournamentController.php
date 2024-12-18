@@ -14,23 +14,6 @@ class TournamentController extends Controller
         $tournament = Tournament::findOrFail($id);
         $scores = $tournament->teams; // Haal de teams op die aan het toernooi zijn gekoppeld
 
-        if ($teams->count() % 2 !== 0) {
-            return back()->with('error', 'Het aantal teams moet even zijn voor een bracket.');
-        }
-
-        $round = 1;
-        $matches = $teams->chunk(2);
-
-        foreach ($matches as $pair) {
-            Game::create([
-                'tournament_id' => $tournament->id,
-                'team_1' => $pair[0]->id,
-                'team_2' => $pair[1]->id,
-                'round' => $round,
-            ]);
-        }
-
-        return view('tournaments.bracket', compact('tournament', 'teams',  'scores'));
         return view('tournaments.bracket', compact('tournament', 'scores'));
     }
 
@@ -75,21 +58,21 @@ class TournamentController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validate the request input
-        $request->validate([
-            'title' => 'required|string|max:255', // Validation rule for title
-            'max_teams' => 'required|integer|min:1', // Validation rule for max_teams
-        ]);
+{
+    // Validate the request input
+    $request->validate([
+        'title' => 'required|string|max:255', // Validation rule for title
+        'max_teams' => 'required|integer|min:1', // Validation rule for max_teams
+    ]);
 
-        // Create and save the tournament
-        $tournaments = Tournament::create([
-            'title' => $request->title,
-            'max_teams' => $request->max_teams,
-        ]);
+    // Create and save the tournament
+    Tournament::create([ // Verwijder het $tournaments-variabele en gebruik direct de create methode.
+        'title' => $request->title,
+        'max_teams' => $request->max_teams,
+    ]);
 
-        return redirect()->route('tournament.index');
-    }
+    return redirect()->route('tournament.index');
+}
 
     public function delete(Tournament $tournament, $id)
     {

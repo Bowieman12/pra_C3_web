@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
+    public function index(){
+        $teams = Team::all();
+        return view('teams.index', compact('teams'));
+    }
+    
     // Laat het formulier zien voor het bewerken van het team van de ingelogde gebruiker
     public function edit()
     {
