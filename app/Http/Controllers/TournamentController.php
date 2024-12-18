@@ -30,7 +30,7 @@ class TournamentController extends Controller
             ]);
         }
 
-        return view('tournaments.bracket', compact('tournament', 'teams',  'scores' ));
+        return view('tournaments.bracket', compact('tournament', 'teams',  'scores'));
     }
 
 
@@ -45,22 +45,26 @@ class TournamentController extends Controller
         return view('tournaments.index', compact('tournaments'));
     }
 
-    public function edit(Tournament $tournament)
+    public function edit($id)
     {
-        return view('tournament.edit', ['tournament' => $tournament]);
+        $tournament = Tournament::findOrFail($id);
+        return view('tournaments.edit', compact('tournament'));
     }
-
-    public function update(Request $request, Tournament $tournament)
+    public function update(Request $request, Tournament $tournament, $id)
     {
+        $tournament = Tournament::findOrFail($id);
         $request->validate([
             'title' => ['required', 'string'],
             'max_teams' => ['required', 'numeric'],
+            'created_at' => 'required|date',
         ]);
 
-        $tournament->update([
-            'title' => $request->title,
-            'max_teams' => $request->max_teams,
-        ]);
+        $tournament->title = $request->input('title');
+        $tournament->max_teams = $request->input('max_teams');
+        $tournament->created_at = $request->input('created_at');
+
+        $tournament->save();
+
         return redirect()->route('tournament.index');
     }
 
@@ -70,29 +74,27 @@ class TournamentController extends Controller
     }
 
     public function store(Request $request)
-{
-    // Validate the request input
-    $request->validate([
-        'title' => 'required|string|max:255', // Validation rule for title
-        'max_teams' => 'required|integer|min:1', // Validation rule for max_teams
-    ]);
-
-    // Create and save the tournament
-    $tournaments = Tournament::create([
-        'title' => $request->title,
-        'max_teams' => $request->max_teams,
-    ]);
-
-    return redirect()->route('tournament.index');
-}
-
-
-    public function delete(Tournament $tournament)
     {
-        $tournament= Tournament::findOrFail($tournament);
-        $tournament->delete();
+        // Validate the request input
+        $request->validate([
+            'title' => 'required|string|max:255', // Validation rule for title
+            'max_teams' => 'required|integer|min:1', // Validation rule for max_teams
+        ]);
+
+        // Create and save the tournament
+        $tournaments = Tournament::create([
+            'title' => $request->title,
+            'max_teams' => $request->max_teams,
+        ]);
+
         return redirect()->route('tournament.index');
     }
 
+    public function delete(Tournament $tournament, $id)
+    {
+        $tournament = Tournament::findOrFail($id);
+        $tournament->delete();
+        return redirect()->route('admin.index')->with('success', 'Toernooi succesvol verwijderd');
+    }
 
 }

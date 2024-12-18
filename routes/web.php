@@ -40,10 +40,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/adminpanel', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/tournament/create', [TournamentController::class, 'create'])->name('tournament.create');
-    Route::put('/tournament/{match}/score', [TournamentController::class, 'update'])->name('tournament.update');
+    Route::put('/tournament/{id}', [TournamentController::class, 'update'])->name('tournament.update');
     Route::post('/tournament/create', [TournamentController::class, 'store'])->name('tournament.store');
     Route::get('/tournament/{id}/edit', [TournamentController::class, 'edit'])->name('tournament.edit');
     Route::delete('tournament/{id}', [TournamentController::class, 'delete'])->name('tournament.destroy');
+    Route::get('/adminpanel', [AdminController::class, 'admin'])->name('admin.index');
 });
 
 Route::get('scoreboard', [ScoreboardController::class, 'index'])->name('scoreboard.index');
