@@ -65,4 +65,8 @@ Route::put('/games/{game}', [GameController::class, 'update'])->name('games.upda
 
 Route::post('/tournament/{id}/add-team', [TournamentController::class, 'addTeam'])->name('tournament.addTeam');
 
+Route::post('/tournament/{id}/start', [TournamentController::class, 'startTournament'])->name('tournament.start');
+
+Route::patch('/game/{id}', [GameController::class, 'update'])->name('game.update');
+
 require __DIR__.'/auth.php';

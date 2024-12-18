@@ -14,23 +14,6 @@ class TournamentController extends Controller
         $tournament = Tournament::findOrFail($id);
         $scores = $tournament->teams; // Haal de teams op die aan het toernooi zijn gekoppeld
 
-        if ($teams->count() % 2 !== 0) {
-            return back()->with('error', 'Het aantal teams moet even zijn voor een bracket.');
-        }
-
-        $round = 1;
-        $matches = $teams->chunk(2);
-
-        foreach ($matches as $pair) {
-            Game::create([
-                'tournament_id' => $tournament->id,
-                'team_1' => $pair[0]->id,
-                'team_2' => $pair[1]->id,
-                'round' => $round,
-            ]);
-        }
-
-        return view('tournaments.bracket', compact('tournament', 'teams',  'scores'));
         return view('tournaments.bracket', compact('tournament', 'scores'));
     }
 
@@ -76,16 +59,15 @@ class TournamentController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request input
         $request->validate([
-            'title' => 'required|string|max:255', // Validation rule for title
-            'max_teams' => 'required|integer|min:1', // Validation rule for max_teams
+            'title' => 'required|string|max:255',
+            'max_teams' => 'required|integer|min:1',
         ]);
 
-        // Create and save the tournament
-        $tournaments = Tournament::create([
+        Tournament::create([
             'title' => $request->title,
             'max_teams' => $request->max_teams,
+            'started' => null,
         ]);
 
         return redirect()->route('tournament.index');
@@ -118,20 +100,66 @@ class TournamentController extends Controller
     public function addTeam(Request $request, $tournamentId)
     {
         $tournament = Tournament::findOrFail($tournamentId);
+
+        if ($tournament->started) {
+            return redirect()->route('tournament.bracket', $tournamentId)
+                             ->with('error', 'Teams kunnen niet worden toegevoegd nadat het toernooi is gestart.');
+        }
+
         $team = Team::findOrFail($request->user()->team_id);
 
-        // Controleer of het team al is toegevoegd
         if ($tournament->teams()->where('team_id', $team->id)->exists()) {
             return redirect()->route('tournament.bracket', $tournamentId)
                              ->with('error', 'Je team is al toegevoegd aan dit toernooi.');
         }
 
-        // Voeg het team toe aan het toernooi
         $tournament->teams()->attach($team->id);
 
         return redirect()->route('tournament.bracket', $tournamentId)
                          ->with('success', 'Team toegevoegd aan het toernooi!');
     }
 
+
+    public function startTournament($tournamentId)
+    {
+        $tournament = Tournament::findOrFail($tournamentId);
+
+        if ($tournament->started) {
+            return redirect()->route('tournament.bracket', $tournamentId)
+                             ->with('error', 'Het toernooi is al gestart.');
+        }
+
+        $teams = $tournament->teams->pluck('id')->shuffle();
+        $numTeams = $teams->count();
+        $numRounds = ceil(log($numTeams, 2));
+
+        $this->createBracket($tournament, $teams, $numRounds);
+
+        $tournament->started = true;
+        $tournament->save();
+
+        return redirect()->route('tournament.bracket', $tournamentId)
+                         ->with('success', 'Toernooi gestart!');
+    }
+
+    protected function createBracket($tournament, $teams, $numRounds)
+    {
+        $games = [];
+        $roundTeams = $teams->toArray();
+
+        for ($round = 1; $round <= $numRounds; $round++) {
+            $roundGames = [];
+            while (count($roundTeams) > 1) {
+                $team1 = array_shift($roundTeams);
+                $team2 = array_shift($roundTeams);
+                $roundGames[] = $tournament->games()->create([
+                    'team_1' => $team1,
+                    'team_2' => $team2,
+                ]);
+            }
+            $games[] = $roundGames;
+            $roundTeams = array_map(fn($game) => $game->team_1, $roundGames);
+        }
+    }
 
 }
