@@ -130,10 +130,8 @@ class TournamentController extends Controller
         }
 
         $teams = $tournament->teams->pluck('id')->shuffle();
-        $numTeams = $teams->count();
-        $numRounds = ceil(log($numTeams, 2));
 
-        $this->createBracket($tournament, $teams, $numRounds);
+        $this->createRoundRobinGames($tournament, $teams);
 
         $tournament->started = true;
         $tournament->save();
@@ -142,23 +140,17 @@ class TournamentController extends Controller
                          ->with('success', 'Toernooi gestart!');
     }
 
-    protected function createBracket($tournament, $teams, $numRounds)
+    protected function createRoundRobinGames($tournament, $teams)
     {
-        $games = [];
-        $roundTeams = $teams->toArray();
+        $teamCount = count($teams);
 
-        for ($round = 1; $round <= $numRounds; $round++) {
-            $roundGames = [];
-            while (count($roundTeams) > 1) {
-                $team1 = array_shift($roundTeams);
-                $team2 = array_shift($roundTeams);
-                $roundGames[] = $tournament->games()->create([
-                    'team_1' => $team1,
-                    'team_2' => $team2,
+        for ($i = 0; $i < $teamCount; $i++) {
+            for ($j = $i + 1; $j < $teamCount; $j++) {
+                $tournament->games()->create([
+                    'team_1' => $teams[$i],
+                    'team_2' => $teams[$j],
                 ]);
             }
-            $games[] = $roundGames;
-            $roundTeams = array_map(fn($game) => $game->team_1, $roundGames);
         }
     }
 

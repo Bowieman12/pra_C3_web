@@ -49,13 +49,7 @@
                         </ul>
                     @endforeach
 
-                    @foreach ($games as $game)
-                        <ul lass="bg-white rounded-lg shadow-md p-4 flex justify-between items-center">
-                            <span class="text-blue-600 font-medium">
-                                <li>{{ $game->name->score }}</li>
-                            </span>
-                        </ul>
-                    @endforeach
+
 
                 </div>
             </div>

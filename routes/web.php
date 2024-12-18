@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
 Route::put('/games/{game}', [GameController::class, 'update'])->name('games.update');
 
 Route::post('/tournament/{id}/add-team', [TournamentController::class, 'addTeam'])->name('tournament.addTeam');
+Route::get('/tournament/{id}', [TournamentController::class, 'show'])->name('tournament.bracket');
 
 Route::post('/tournament/{id}/start', [TournamentController::class, 'startTournament'])->name('tournament.start');
 

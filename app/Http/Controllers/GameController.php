@@ -9,26 +9,34 @@ class GameController extends Controller
 {
     public function update(Request $request, $id)
     {
-        $game = Game::findOrFail($id);
-
+        $game = Game::with(['team1', 'team2'])->findOrFail($id);
+    
         if (auth()->user()->role !== 'admin' && auth()->user()->role !== 'referee') {
             return redirect()->back()->with('error', 'Je hebt geen toegang om dit te doen.');
         }
-
+    
         $winnerId = $request->input('winner');
-
+    
         if ($winnerId == $game->team_1) {
             $game->team_1_score = 1;
             $game->team_2_score = 0;
+            $game->team1->increment('wins');
         } else {
             $game->team_1_score = 0;
             $game->team_2_score = 1;
+            $game->team2->increment('wins');
         }
-
+    
         $game->save();
-
-        $this->processNextRound($game, $winnerId);
-
+    
+        // Controleer of alle wedstrijden zijn gespeeld
+        $tournament = $game->tournament;
+        if ($tournament->games()->where('team_1_score', 0)->where('team_2_score', 0)->count() == 0) {
+            $winner = $tournament->teams()->orderByDesc('wins')->first();
+            $tournament->winner_id = $winner->id;
+            $tournament->save();
+        }
+    
         return redirect()->back()->with('success', 'Winnaar gekozen!');
     }
 
