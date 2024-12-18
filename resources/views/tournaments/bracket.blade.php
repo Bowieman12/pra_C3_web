@@ -4,40 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ $tournament->title }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Document</title>
 </head>
 
 <body>
-    <header>
-        <x-header />
-    </header>
-    <h1 class="text-xl flex justify-center font-bold mb-[2.5rem]">Scoreboard</h1>
+    <x-header />
+    <h1 class="text-xl flex justify-center font-bold mb-4">{{ $tournament->title }}</h1>
+    <div class="flex justify-center mb-4">
+        <form action="{{ route('tournament.addTeam', $tournament->id) }}" method="POST" class="flex">
+            @csrf
+            <button type="submit" class="border px-4 py-2 bg-blue-500 text-white">Voeg Mijn Team Toe aan Toernooi</button>
+        </form>
+    </div>
     <div class="flex justify-center">
-        <table class="mx-[10rem] text-center">
+        <table class="mx-10 text-center">
             <thead>
                 <tr>
                     <th class="border px-4 py-2">Id</th>
                     <th class="border px-4 py-2">Team name</th>
-                    <th class="border px-4 py-2">Points</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($scores as $score)
+                @foreach ($scores as $team)
                     <tr>
-                        <td class="border px-4 py-2">{{ $score->id }}</td>
-                        <td class="border px-4 py-2">{{ $score->name }}</td>
-                        <td class="border px-4 py-2">{{ $score->score }}</td>
+                        <td class="border px-4 py-2">{{ $team->id }}</td>
+                        <td class="border px-4 py-2">{{ $team->name }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    <x-footer />
 
-    <footer class="mt-[25rem]">
-        <x-footer />
-    </footer>
+    @if(session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            {{ session('error') }}
+        </div>
+    @endif
 </body>
 
 </html>

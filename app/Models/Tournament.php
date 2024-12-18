@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tournament extends Model
 {
+    use HasFactory;
+
     public function teams()
     {
-        return $this->hasManyThrough(Team::class, TournamentTeam::class, 'tournament_id', 'id', 'id', 'team_id');
+        return $this->belongsToMany(Team::class, 'tournament_teams');
     }
 
     public function games()
