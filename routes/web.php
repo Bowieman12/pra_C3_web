@@ -39,29 +39,26 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/adminpanel', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/tournament/create', [TournamentController::class, 'create'])->name('tournament.create');
     Route::put('/tournament/{match}/score', [TournamentController::class, 'update'])->name('tournament.update');
-    Route::post('/tournament/create', [TournamentController::class, 'store'])->name('tournament.store');
+    Route::post('/tournament/create', [TournamentController::class, 'store'])->name('tournament.create');
     Route::get('/tournament/{id}/edit', [TournamentController::class, 'edit'])->name('tournament.edit');
     Route::delete('tournament/{id}', [TournamentController::class, 'delete'])->name('tournament.destroy');
 });
+Route::post('/tournaments/{tournament}/teams', [TournamentController::class, 'addTeam'])->name('tournaments.bracket');
 
 Route::get('scoreboard', [ScoreboardController::class, 'index'])->name('scoreboard.index');
 
 Route::get('/tournament', [TournamentController::class, 'index'])->name('tournament.index');
-Route::get('/tournament/store/', [TournamentController::class, 'store'])->name('tournament.store');
 Route::get('/tournament/{tournament}', [TournamentController::class, 'showBracket'])->name('tournament.bracket');
 
-
-
-
-
-
+Route::get('/tournaments/{tournament}/teams', [TournamentController::class, 'showTeams'])->name('tournaments.showTeams');
 Route::middleware(['auth'])->group(function () {
     Route::get('/teams/edit', [TeamController::class, 'edit'])->name('teams.edit');
     Route::put('/teams/update', [TeamController::class, 'update'])->name('teams.update');
 });
 
 Route::put('/games/{game}', [GameController::class, 'update'])->name('games.update');
+
+Route::post('/tournament/{id}/add-team', [TournamentController::class, 'addTeam'])->name('tournament.addTeam');
 
 require __DIR__.'/auth.php';

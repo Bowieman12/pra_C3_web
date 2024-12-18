@@ -23,4 +23,9 @@ class Team extends Model
     public function Games(){
         return $this->hasMany((Game::class));
     }
+    public function tournaments()
+    {
+        return $this->belongsToMany(Tournament::class, 'tournament_teams');
+    }
+
 }

@@ -4,33 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Tournament;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth; 
+use App\Models\Team;       
 class TournamentController extends Controller
 {
     // Functie om het bracket te genereren
-    public function showBracket($tournament)
+    public function showBracket($id)
     {
-        $scores = Tournament::all();
-        $tournament = Tournament::findOrFail($tournament);
-        $teams = $tournament->teams;
+        $tournament = Tournament::findOrFail($id);
+        $scores = $tournament->teams; // Haal de teams op die aan het toernooi zijn gekoppeld
 
-        if ($teams->count() % 2 !== 0) {
-            return back()->with('error', 'Het aantal teams moet even zijn voor een bracket.');
-        }
-
-        $round = 1;
-        $matches = $teams->chunk(2);
-
-        foreach ($matches as $pair) {
-            Game::create([
-                'tournament_id' => $tournament->id,
-                'team_1' => $pair[0]->id,
-                'team_2' => $pair[1]->id,
-                'round' => $round,
-            ]);
-        }
-
-        return view('tournaments.bracket', compact('tournament', 'teams',  'scores' ));
+        return view('tournaments.bracket', compact('tournament', 'scores'));
     }
 
 
@@ -94,5 +78,41 @@ class TournamentController extends Controller
         return redirect()->route('tournament.index');
     }
 
+    public function show($id)
+    {
+        $tournament = Tournament::findOrFail($id);
+    
+        // Haal het team van de ingelogde gebruiker op
+        $userTeam = auth()->user()->team;
+    
+        if (!$userTeam) {
+            return back()->with('error', 'Je hebt geen team om toe te voegen aan het toernooi.');
+        }
+    
+        $scores = $tournament->teams; // Als je scores of teams in het toernooi wilt tonen
+    
+        return view('tournaments.show', compact('tournament', 'userTeam', 'scores'));
+    }
+    
+    
+
+    public function addTeam(Request $request, $tournamentId)
+    {
+        $tournament = Tournament::findOrFail($tournamentId);
+        $team = Team::findOrFail($request->user()->team_id);
+
+        // Controleer of het team al is toegevoegd
+        if ($tournament->teams()->where('team_id', $team->id)->exists()) {
+            return redirect()->route('tournament.bracket', $tournamentId)
+                             ->with('error', 'Je team is al toegevoegd aan dit toernooi.');
+        }
+
+        // Voeg het team toe aan het toernooi
+        $tournament->teams()->attach($team->id);
+
+        return redirect()->route('tournament.bracket', $tournamentId)
+                         ->with('success', 'Team toegevoegd aan het toernooi!');
+    }
+    
 
 }
